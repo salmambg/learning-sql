@@ -150,4 +150,135 @@ SELECT COUNT(ProductID)
 FROM Products
 WHERE Price > 20;
 
+-- SQL SUM() Function
+SELECT SUM(Quantity)
+FROM OrderDetails;
+
+-- Syntax:
+SELECT SUM(column_name)
+FROM table_name
+WHERE condition;
+
+-- Sum with an expression
+SELECT SUM(Price * Quantity)
+FROM OrderDetails
+LEFT JOIN Products ON OrderDetails.ProductID = Products.ProductID;
+
+-- LEFT JOIN SYNTAX:
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2
+ON table1.column_name = table2.column_name;
+
+-- SQL AVERAGE:
+SELECT avg(Price)
+FROM Products;
+
+-- Syntax:
+SELECT AVG(Column_name)
+From table_name
+WHERE condition;
+-- Example:
+SELECT AVG(Price)
+FROM Products
+WHERE CategoryID = 1;
+
+-- SQL LIKE OPERATOR:
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';
+
+-- SYNTAX:
+SELECT column1, column2, ...
+FROM table_name
+WHERE columnN LIKE pattern;
+-- WILDCARD (_) REPRESENT A SINGLE CHARACTER
+SELECT * FROM Customers
+WHERE city LIKE 'L_nd__';
+
+-- The % Wildcard (return all cities contain L)
+SELECT * FROM Customers
+WHERE city LIKE '%L%';
+-- starts with a or starts  with b
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%' OR CustomerName LIKE 'b%';
+-- STARTS WITH
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'La%';
+-- ENDS WITH
+SELECT * FROM Customers
+WHERE CustomerName LIKE '%b';
+-- starts with b or ends with s
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'b%s'
+
+-- Contains (a specific letter or phrase, add the % both before and after the letter or phrase)
+SELECT * FROM Customers
+WHERE CustomerName LIKE '%or%';
+
+-- Combine wildcards: Return all customers that starts with "a" and are at least 3 characters in length:
+SELECT * FROM customers
+WHERE Customername LIKE  'a___%';
+
+--  - Wildcard
+-- The - wildcard allows you to specify a range of characters inside the [] wildcard.
+-- Example
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '[a-f]%';
+-- Return all customers starting with "a", "b", "c", "d", "e" or "f":
+
+-- [] Wildcard
+-- The [] wildcard returns a result if any of the characters inside gets a match.
+-- Example
+-- Return all customers starting with either "b", "s", or "p":
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '[bsp]%';
+
+-- SQL IN Operator
+SELECT * FROM Customers
+WHERE Country IN('France','Germany', 'Uk');
+--  or NOT IN
+SELECT * FROM Customers
+WHERE Country  NOT IN('France','Germany', 'Uk');
+
+
+-- SElECT in
+SELECT * FROM Customers
+WHERE CustomerID IN (SELECT CustomerID FROM Orders);
+-- return all records from the main query that are present in the result of the subquery.
+
+-- SQL BETWEEN OPERATOR
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20;
+
+-- BETWEEN with IN:selects all products with a price between 10 and 20. In addition, the CategoryID must be either 1,2, or 3:
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20
+AND CategoryID IN (1,2,3);
+
+-- BETWEEN Text Values(return all the value values between this two string)
+SELECT * FROM Products
+WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'
+ORDER BY ProductName;
+-- BETWEEN DATES
+SELECT * FROM Orders
+WHERE OrderDate BETWEEN #07/01/1996# AND #07/31/1996#;
+
+-- ALIAS OR AS
+SELECT CustomerID AS ID
+FROM Customers;
+
+SELECT o.OrderID, o.OrderDate, c.CustomerName
+FROM Customers AS c, Orders AS o
+WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+-- without alias
+SELECT orders.OrderID, orders.OrderDate , customers.CustomerName
+FROM Customers, Order
+WHERE customers.CustomerName ='Around the horn' AND customers.CustomerID = orders.CustomerID;
+
+-- SQL joins:that selects records that have matching values in both tables:
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
 
